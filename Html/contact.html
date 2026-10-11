@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="fr" data-dynamic="1">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; connect-src 'self' https:; img-src 'self' data:; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="robots" content="index, follow">
+<title>Contact | Budget mensuel</title>
+<meta name="description" content="Contacter l'éditeur de Budget mensuel pour une question, un problème ou une demande liée à vos données personnelles.">
+<link rel="canonical" href="https://budget-mensuel.ch/Html/contact.html">
+<meta property="og:url" content="https://budget-mensuel.ch/Html/contact.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_CH">
+<meta property="og:site_name" content="Budget mensuel">
+<meta property="og:title" content="Contact | Budget mensuel">
+<meta property="og:description" content="Contacter l'éditeur de Budget mensuel pour une question, un problème ou une demande liée à vos données personnelles.">
+<meta property="og:image" content="https://budget-mensuel.ch/Img/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f2f1ec" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141414" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../favicon.ico" sizes="32x32">
+<link rel="icon" href="../Img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../Img/apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="stylesheet" href="../Css/style.css">
+<script src="../JavaScript/theme.js"></script>
+<script src="../JavaScript/config.js" defer></script>
+<script src="../JavaScript/i18n.js" defer></script>
+<script src="../JavaScript/site.js" defer></script>
+<script src="../JavaScript/contact.js" defer></script>
+</head>
+<body data-title="ct.meta.title" data-desc="ct.meta.desc">
+<a class="skip" href="#contenu" data-i18n="skip">Aller au contenu</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">Budget mensuel</a>
+    <nav aria-label="Menu principal" data-i18n-attr="aria-label:nav.label">
+      <a href="../Html/aide.html" data-href-en="../Html/en/help.html" data-href-de="../Html/de/hilfe.html" data-i18n="nav.help">Aide</a>
+      <a href="../index.html#reglages" data-i18n="nav.settings">Réglages</a>
+      <a href="../Html/compte.html" data-i18n="nav.account">Compte</a>
+      <a href="../Html/contact.html" data-i18n="nav.contact">Contact</a>
+      <span class="lang-toggle" role="group" aria-label="Langue / Language / Sprache" data-lang-switch></span>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu" class="wrap page">
+<h1 data-i18n="ct.title">Contact</h1>
+<p data-i18n="ct.p1">Pour une question, un problème sur le site ou une demande concernant vos données personnelles. La réponse arrive par e-mail, en général sous quelques jours.</p>
+<p data-i18n="ct.p2">Ce formulaire n'a pas accès à votre budget.</p>
+
+<form id="contact-form" class="contact-form" novalidate>
+  <div class="field">
+    <label for="c-email" data-i18n="ct.email">Votre adresse e-mail</label>
+    <input id="c-email" name="email" type="email" required maxlength="254" autocomplete="email" aria-describedby="c-email-err">
+    <p class="error" id="c-email-err" aria-live="polite"></p>
+  </div>
+  <div class="field">
+    <label for="c-subject" data-i18n="ct.subject">Sujet</label>
+    <select id="c-subject" name="subject" required>
+      <option value="question" data-i18n="ct.s.question">Question sur l'utilisation</option>
+      <option value="probleme" data-i18n="ct.s.probleme">Problème sur le site</option>
+      <option value="suggestion" data-i18n="ct.s.suggestion">Suggestion</option>
+      <option value="donnees" data-i18n="ct.s.donnees">Données personnelles</option>
+    </select>
+  </div>
+  <div class="field">
+    <label for="c-message" data-i18n="ct.message">Message</label>
+    <textarea id="c-message" name="message" required minlength="10" maxlength="3000" aria-describedby="c-message-hint c-message-err"></textarea>
+    <p class="hint" id="c-message-hint" data-i18n="ct.hint">Entre 10 et 3000 caractères. N'indiquez pas de numéro de compte ni de mot de passe.</p>
+    <p class="error" id="c-message-err" aria-live="polite"></p>
+  </div>
+  <div class="trap" aria-hidden="true">
+    <label for="c-website" data-i18n="ct.trap">Ne pas remplir ce champ</label>
+    <input id="c-website" name="website" type="text" tabindex="-1" autocomplete="off">
+  </div>
+  <p class="hint" data-i18n-html="ct.privacy">Votre adresse et votre message servent uniquement à vous répondre et sont supprimés au plus tard 12 mois après notre dernier échange. Détails dans la <a href="confidentialite.html">politique de confidentialité</a>.</p>
+  <button type="submit" class="primary" data-i18n="ct.submit">Envoyer le message</button>
+  <p class="form-status" id="form-status" role="status"></p>
+</form>
+<noscript><p class="notice">Le formulaire a besoin de JavaScript. Vous pouvez aussi écrire à aide@budget-mensuel.ch. / You can also write to aide@budget-mensuel.ch.</p></noscript>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav aria-label="Informations légales" data-i18n-attr="aria-label:f.legal">
+      <a href="../Html/mentions-legales.html" data-href-en="../Html/en/legal-notice.html" data-href-de="../Html/de/impressum.html" data-i18n="f.mentions">Mentions légales</a>
+      <a href="../Html/confidentialite.html" data-href-en="../Html/en/privacy.html" data-href-de="../Html/de/datenschutz.html" data-i18n="f.privacy">Confidentialité</a>
+      <a href="../Html/cookies.html" data-href-en="../Html/en/cookies.html" data-href-de="../Html/de/cookies.html" data-i18n="f.cookies">Cookies</a>
+      <a href="../Html/conditions.html" data-href-en="../Html/en/terms.html" data-href-de="../Html/de/nutzungsbedingungen.html" data-i18n="f.terms">Conditions d'utilisation</a>
+      <a href="../Html/contact.html" data-i18n="f.contact">Contact</a>
+      <button type="button" class="link inline" data-cookies data-i18n="f.cookiesBtn">Gérer les cookies</button>
+      <button type="button" class="link inline" data-theme-cycle>Thème : auto</button>
+    </nav>
+    <p data-i18n="f.disclaimer">Budget mensuel, outil gratuit. Les calculs sont indicatifs et ne remplacent pas un conseil financier.</p>
+  </div>
+</footer>
+</body>
+</html>

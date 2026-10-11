@@ -1,0 +1,16 @@
+# Budget mensuel
+
+> Free personal budget table in French, English and German. Works without an account (data stays in the browser). An optional account (Google or email and password) syncs the budget between devices.
+
+Features: one block per bank account (bank, currency, gross salary, contributions, tax withheld, income, expenses by category), month balance and what is left after savings and debts, planned budget per category with alerts, one-off lines, undo and saved versions, 12-month chart, Swiss figures (pillar 3a limit, tax provision, 13th salary), installable offline app, currency conversion with ECB reference rates, expenses by category, savings, debts and wish lists, settings (language, light or dark theme, country and currency, alert threshold), month-by-month history and change log, export (JSON, Excel, CSV, PDF, Word, Markdown) and import with a preview (backups, templates to fill in for Excel, CSV, Word and Markdown, free text written as "label: amount", and bank statements in CSV, Excel or PDF), all processed in the browser. The country (detected or chosen) sets the currency, number format, suggested banks and salary deduction names.
+
+## Pages
+
+- [Budget table](https://budget-mensuel.ch/): the tool itself, settings at /#reglages
+- [Aide](https://budget-mensuel.ch/Html/aide.html) / [Help](https://budget-mensuel.ch/Html/en/help.html) / [Hilfe](https://budget-mensuel.ch/Html/de/hilfe.html): full user guide
+- [Account](https://budget-mensuel.ch/Html/compte.html): sign in, create an account, reset the password, delete the account
+- [Contact](https://budget-mensuel.ch/Html/contact.html)
+- [Confidentialité](https://budget-mensuel.ch/Html/confidentialite.html) / [Privacy](https://budget-mensuel.ch/Html/en/privacy.html) / [Datenschutz](https://budget-mensuel.ch/Html/de/datenschutz.html)
+- [Cookies](https://budget-mensuel.ch/Html/cookies.html) / [Cookies (EN)](https://budget-mensuel.ch/Html/en/cookies.html) / [Cookies (DE)](https://budget-mensuel.ch/Html/de/cookies.html)
+- [Conditions d'utilisation](https://budget-mensuel.ch/Html/conditions.html) / [Terms of use](https://budget-mensuel.ch/Html/en/terms.html) / [Nutzungsbedingungen](https://budget-mensuel.ch/Html/de/nutzungsbedingungen.html)
+- [Mentions légales](https://budget-mensuel.ch/Html/mentions-legales.html) / [Legal notice](https://budget-mensuel.ch/Html/en/legal-notice.html) / [Impressum](https://budget-mensuel.ch/Html/de/impressum.html)

@@ -1,0 +1,7 @@
+.DS_Store
+__MACOSX/
+node_modules/
+api/node_modules/
+api/.wrangler/
+api/dist/
+*.log

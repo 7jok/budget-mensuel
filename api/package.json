@@ -1,0 +1,10 @@
+{
+  "name": "budget-mensuel-api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --no-warnings --test",
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev"
+  }
+}

@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="fr" data-dynamic="1">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; connect-src 'self' https:; img-src 'self' data:; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="robots" content="noindex, follow">
+<title>Compte | Budget mensuel</title>
+<meta name="description" content="Connexion à Budget mensuel pour retrouver votre budget sur tous vos appareils.">
+<link rel="canonical" href="https://budget-mensuel.ch/Html/compte.html">
+<meta property="og:url" content="https://budget-mensuel.ch/Html/compte.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_CH">
+<meta property="og:site_name" content="Budget mensuel">
+<meta property="og:title" content="Compte | Budget mensuel">
+<meta property="og:description" content="Connexion à Budget mensuel pour retrouver votre budget sur tous vos appareils.">
+<meta property="og:image" content="https://budget-mensuel.ch/Img/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f2f1ec" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141414" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../favicon.ico" sizes="32x32">
+<link rel="icon" href="../Img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../Img/apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="stylesheet" href="../Css/style.css">
+<script src="../JavaScript/theme.js"></script>
+<script src="../JavaScript/config.js" defer></script>
+<script src="../JavaScript/i18n.js" defer></script>
+<script src="../JavaScript/site.js" defer></script>
+<script src="../JavaScript/compte.js" defer></script>
+</head>
+<body data-title="acc.meta.title" data-desc="acc.meta.desc">
+<a class="skip" href="#contenu" data-i18n="skip">Aller au contenu</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">Budget mensuel</a>
+    <nav aria-label="Menu principal" data-i18n-attr="aria-label:nav.label">
+      <a href="../Html/aide.html" data-href-en="../Html/en/help.html" data-href-de="../Html/de/hilfe.html" data-i18n="nav.help">Aide</a>
+      <a href="../index.html#reglages" data-i18n="nav.settings">Réglages</a>
+      <a href="../Html/compte.html" data-i18n="nav.account">Compte</a>
+      <a href="../Html/contact.html" data-i18n="nav.contact">Contact</a>
+      <span class="lang-toggle" role="group" aria-label="Langue / Language / Sprache" data-lang-switch></span>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu" class="wrap page">
+<h1 data-i18n="acc.title">Compte</h1>
+<p data-i18n="acc.intro">Le compte est facultatif. Il enregistre votre budget pour le retrouver sur vos autres appareils.</p>
+<p class="form-status" id="acc-msg" role="status" aria-live="polite"></p>
+
+<section id="view-out" hidden>
+  <div class="tabs" role="tablist">
+    <button type="button" role="tab" id="tab-login" aria-selected="true" aria-controls="auth-form" data-i18n="acc.tab.login">Se connecter</button>
+    <button type="button" role="tab" id="tab-register" aria-selected="false" aria-controls="auth-form" data-i18n="acc.tab.register">Créer un compte</button>
+  </div>
+  <form id="auth-form" class="auth-form" role="tabpanel" novalidate>
+    <div class="field">
+      <label for="a-email" data-i18n="acc.email">Adresse e-mail</label>
+      <input id="a-email" type="email" required maxlength="254" autocomplete="email">
+    </div>
+    <div class="field">
+      <label for="a-pwd" data-i18n="acc.password">Mot de passe</label>
+      <input id="a-pwd" type="password" required minlength="10" maxlength="200" autocomplete="current-password">
+    </div>
+    <div class="field" id="a-pwd2-wrap" hidden>
+      <label for="a-pwd2" data-i18n="acc.password2">Répétez le mot de passe</label>
+      <input id="a-pwd2" type="password" minlength="10" maxlength="200" autocomplete="new-password" aria-describedby="a-hint">
+      <p class="hint" id="a-hint" data-i18n="acc.pwdHint">Au moins 10 caractères. Une phrase facile à retenir fonctionne bien.</p>
+    </div>
+    <p class="hint" id="a-age" hidden data-i18n="acc.age">Le compte est réservé aux personnes de 16 ans ou plus. Avant 16 ans, il faut l'accord d'un parent ou d'un représentant légal.</p>
+    <button type="submit" class="primary" id="submit-login" data-i18n="acc.submit.login">Se connecter</button>
+    <button type="submit" class="primary" id="submit-register" hidden data-i18n="acc.submit.register">Créer mon compte</button>
+  </form>
+  <p class="or" data-i18n="acc.or">ou</p>
+  <p><a class="google-btn" id="google-btn" href="#" data-i18n="acc.google">Continuer avec Google</a></p>
+  <p><button type="button" class="link" id="forgot-open" data-i18n="acc.forgot">Mot de passe oublié ?</button></p>
+</section>
+
+<section id="view-forgot" hidden>
+  <h2 data-i18n="acc.forgot.h">Mot de passe oublié</h2>
+  <p data-i18n="acc.forgot.p">Indiquez votre adresse e-mail. Si un compte existe, vous recevrez un lien pour choisir un nouveau mot de passe, valable 60 minutes.</p>
+  <form id="forgot-form" class="auth-form" novalidate>
+    <div class="field">
+      <label for="f-email" data-i18n="acc.email">Adresse e-mail</label>
+      <input id="f-email" type="email" required maxlength="254" autocomplete="email">
+    </div>
+    <button type="submit" data-i18n="acc.forgot.submit">Envoyer le lien</button>
+  </form>
+  <p><button type="button" class="link" data-back data-i18n="acc.back">Retour à la connexion</button></p>
+</section>
+
+<section id="view-reset" hidden>
+  <h2 data-i18n="acc.reset.h">Nouveau mot de passe</h2>
+  <p data-i18n="acc.reset.p">Indiquez l'adresse e-mail de votre compte et choisissez un nouveau mot de passe.</p>
+  <form id="reset-form" class="auth-form" novalidate>
+    <div class="field">
+      <label for="r-email" data-i18n="acc.email">Adresse e-mail</label>
+      <input id="r-email" type="email" required maxlength="254" autocomplete="email">
+    </div>
+    <div class="field">
+      <label for="r-pwd" data-i18n="acc.password">Mot de passe</label>
+      <input id="r-pwd" type="password" required minlength="10" maxlength="200" autocomplete="new-password" aria-describedby="r-hint">
+      <p class="hint" id="r-hint" data-i18n="acc.pwdHint">Au moins 10 caractères. Une phrase facile à retenir fonctionne bien.</p>
+    </div>
+    <div class="field">
+      <label for="r-pwd2" data-i18n="acc.password2">Répétez le mot de passe</label>
+      <input id="r-pwd2" type="password" required minlength="10" maxlength="200" autocomplete="new-password">
+    </div>
+    <button type="submit" class="primary" data-i18n="acc.reset.submit">Enregistrer le nouveau mot de passe</button>
+  </form>
+</section>
+
+<section id="view-in" hidden>
+  <h2 data-i18n="acc.in.h">Vous êtes connecté</h2>
+  <div class="account-box">
+    <p id="in-email"></p>
+    <p id="in-methods"></p>
+    <p data-i18n="acc.in.sync">Votre budget est enregistré dans votre compte et synchronisé avec vos autres appareils.</p>
+  </div>
+  <div id="verify-box" class="notice" hidden>
+    <p data-i18n="acc.verify.p">Votre adresse n'est pas encore confirmée. Ouvrez le lien reçu par e-mail : une adresse confirmée permet de retrouver le compte si vous oubliez le mot de passe.</p>
+    <p><button type="button" id="verify-resend" data-i18n="acc.verify.resend">Renvoyer l'e-mail de confirmation</button></p>
+  </div>
+  <p><a href="../index.html" data-i18n="acc.in.goBudget">Aller à mon budget</a></p>
+
+  <h2 data-i18n="acc.pwd.h">Mot de passe</h2>
+  <p class="hint" id="pwd-info"></p>
+  <form id="pwd-form" class="auth-form" novalidate>
+    <div class="field" id="p-current-wrap">
+      <label for="p-current" data-i18n="acc.pwd.current">Mot de passe actuel</label>
+      <input id="p-current" type="password" maxlength="200" autocomplete="current-password">
+    </div>
+    <div class="field">
+      <label for="p-new" data-i18n="acc.pwd.new">Nouveau mot de passe</label>
+      <input id="p-new" type="password" minlength="10" maxlength="200" autocomplete="new-password" aria-describedby="p-hint">
+      <p class="hint" id="p-hint" data-i18n="acc.pwdHint">Au moins 10 caractères. Une phrase facile à retenir fonctionne bien.</p>
+    </div>
+    <div class="field">
+      <label for="p-new2" data-i18n="acc.password2">Répétez le mot de passe</label>
+      <input id="p-new2" type="password" minlength="10" maxlength="200" autocomplete="new-password">
+    </div>
+    <button type="submit" data-i18n="acc.pwd.save">Changer le mot de passe</button>
+  </form>
+
+  <p><button type="button" id="logout" data-i18n="acc.logout">Se déconnecter</button></p>
+
+  <h2 data-i18n="acc.del.h">Supprimer le compte</h2>
+  <p data-i18n="acc.del.p">Votre compte et le budget qui y est enregistré sont effacés définitivement. La copie dans ce navigateur est conservée.</p>
+  <div class="auth-form del-form">
+    <div class="field">
+      <label for="del-pwd" id="del-pwd-label" data-i18n="acc.del.pwd">Mot de passe actuel, pour confirmer</label>
+      <input id="del-pwd" type="password" maxlength="254" autocomplete="current-password">
+    </div>
+  </div>
+  <p><label class="check"><input type="checkbox" id="del-check"><span data-i18n="acc.del.check">Je comprends que c'est définitif.</span></label></p>
+  <p><button type="button" class="danger" id="del-account" data-i18n="acc.del.submit">Supprimer mon compte</button></p>
+</section>
+
+<section id="view-off" hidden>
+  <p class="notice" data-i18n="acc.unavailable">Les comptes ne sont pas encore disponibles sur ce site. Vous pouvez utiliser le budget sans compte.</p>
+</section>
+<noscript><p class="notice">La connexion a besoin de JavaScript. / Signing in needs JavaScript.</p></noscript>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav aria-label="Informations légales" data-i18n-attr="aria-label:f.legal">
+      <a href="../Html/mentions-legales.html" data-href-en="../Html/en/legal-notice.html" data-href-de="../Html/de/impressum.html" data-i18n="f.mentions">Mentions légales</a>
+      <a href="../Html/confidentialite.html" data-href-en="../Html/en/privacy.html" data-href-de="../Html/de/datenschutz.html" data-i18n="f.privacy">Confidentialité</a>
+      <a href="../Html/cookies.html" data-href-en="../Html/en/cookies.html" data-href-de="../Html/de/cookies.html" data-i18n="f.cookies">Cookies</a>
+      <a href="../Html/conditions.html" data-href-en="../Html/en/terms.html" data-href-de="../Html/de/nutzungsbedingungen.html" data-i18n="f.terms">Conditions d'utilisation</a>
+      <a href="../Html/contact.html" data-i18n="f.contact">Contact</a>
+      <button type="button" class="link inline" data-cookies data-i18n="f.cookiesBtn">Gérer les cookies</button>
+      <button type="button" class="link inline" data-theme-cycle>Thème : auto</button>
+    </nav>
+    <p data-i18n="f.disclaimer">Budget mensuel, outil gratuit. Les calculs sont indicatifs et ne remplacent pas un conseil financier.</p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="fr" data-dynamic="1">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; connect-src 'self' https:; img-src 'self' data:; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Budget mensuel : revenus et dépenses par compte</title>
+<meta name="description" content="Suivez vos revenus, dépenses, épargne et dettes mois par mois, compte par compte. Gratuit, sans inscription obligatoire.">
+<link rel="canonical" href="https://budget-mensuel.ch/">
+<meta name="theme-color" content="#f2f1ec" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141414" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_CH">
+<meta property="og:locale:alternate" content="en_GB">
+<meta property="og:locale:alternate" content="de_CH">
+<meta property="og:site_name" content="Budget mensuel">
+<meta property="og:title" content="Budget mensuel : revenus et dépenses par compte">
+<meta property="og:description" content="Un tableau de budget simple et gratuit, en français et en anglais.">
+<meta property="og:url" content="https://budget-mensuel.ch/">
+<meta property="og:image" content="https://budget-mensuel.ch/Img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Budget mensuel, tableau de revenus et dépenses">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" href="Img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="Img/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preload" href="Fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="Css/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Budget mensuel","url":"https://budget-mensuel.ch/","applicationCategory":"FinanceApplication","operatingSystem":"Navigateur web","inLanguage":["fr","en","de"],"isAccessibleForFree":true,"description":"Tableau de budget mensuel par compte : revenus, dépenses, épargne, dettes. Compte facultatif pour synchroniser plusieurs appareils."}
+</script>
+<script src="JavaScript/theme.js"></script>
+<script src="JavaScript/config.js" defer></script>
+<script src="JavaScript/i18n.js" defer></script>
+<script src="JavaScript/site.js" defer></script>
+<script src="JavaScript/countries.js" defer></script>
+<script src="JavaScript/app.js" defer></script>
+<script src="JavaScript/fichiers.js" defer></script>
+</head>
+<body data-title="meta.title" data-desc="meta.desc">
+<a class="skip" href="#contenu" data-i18n="skip">Aller au contenu</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="./">Budget mensuel</a>
+    <nav aria-label="Menu principal" data-i18n-attr="aria-label:nav.label">
+      <a href="Html/aide.html" data-href-en="Html/en/help.html" data-href-de="Html/de/hilfe.html" data-i18n="nav.help">Aide</a>
+      <a href="#reglages" data-i18n="nav.settings">Réglages</a>
+      <a href="Html/compte.html" data-i18n="nav.account">Compte</a>
+      <a href="Html/contact.html" data-i18n="nav.contact">Contact</a>
+      <span class="lang-toggle" role="group" aria-label="Langue / Language" data-lang-switch></span>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu" class="wrap">
+  <noscript><p class="notice">Ce tableau a besoin de JavaScript pour calculer vos totaux. Activez-le dans votre navigateur pour l'utiliser. / This budget needs JavaScript. / Dieses Budget braucht JavaScript.</p></noscript>
+  <p class="notice" id="storage-warning" hidden data-i18n="storage.warning">Votre navigateur bloque l'enregistrement local. Vos saisies seront perdues en fermant la page : pensez à exporter une sauvegarde.</p>
+
+  <section id="setup" class="setup" aria-labelledby="setup-title" hidden>
+    <h1 id="setup-title" data-i18n="setup.title">Votre budget du mois, compte par compte</h1>
+    <p class="lead" data-i18n="setup.lead">Notez vos revenus et vos dépenses pour chaque compte bancaire, même en francs et en euros à la fois : pratique pour les frontaliers. Le tableau calcule le solde de chaque compte et du mois, convertit les devises et classe vos dépenses par catégorie.</p>
+    <p data-i18n="setup.privacy">Aucune inscription nécessaire. Vos montants sont enregistrés dans ce navigateur. Avec un compte facultatif, vous les retrouvez sur vos autres appareils.</p>
+
+    <form id="setup-form" class="setup-form" novalidate>
+      <div class="field">
+        <label for="setup-country" data-i18n="setup.country">Pays de résidence</label>
+        <select id="setup-country" required aria-describedby="setup-detect"></select>
+        <p class="hint" id="setup-detect" aria-live="polite"></p>
+      </div>
+      <div class="field">
+        <label for="setup-cur" data-i18n="setup.cur">Devise principale</label>
+        <select id="setup-cur" required aria-describedby="setup-cur-hint"></select>
+        <p class="hint" id="setup-cur-hint" data-i18n="setup.curHint">Les totaux du mois seront affichés dans cette devise.</p>
+      </div>
+      <div class="field">
+        <label for="setup-bank" data-i18n-html="setup.bank">Banque de votre compte principal <span class="opt">(facultatif)</span></label>
+        <input id="setup-bank" list="banks-list" maxlength="60" autocomplete="off" placeholder="Choisir dans la liste ou écrire" data-i18n-attr="placeholder:setup.bankPh">
+      </div>
+      <button type="submit" class="primary" data-i18n="setup.submit">Créer mon budget</button>
+    </form>
+    <p class="secondary-action"><span data-i18n="setup.hasBackup">Vous avez déjà une sauvegarde ?</span> <button type="button" class="link inline" id="setup-import" data-i18n="setup.import">Importer un fichier</button></p>
+  </section>
+
+  <section id="budget" aria-labelledby="month-title" hidden>
+    <div class="toolbar">
+      <div class="month-nav">
+        <button type="button" id="prev" aria-label="Mois précédent" data-i18n-attr="aria-label:month.prev">‹</button>
+        <label class="visually-hidden" for="month" data-i18n="month.label">Mois affiché</label>
+        <select id="month"></select>
+        <button type="button" id="next" aria-label="Mois suivant" data-i18n-attr="aria-label:month.next">›</button>
+      </div>
+      <div class="toolbar-right">
+        <p class="sync-status" id="sync-status" aria-live="polite"></p>
+        <button type="button" class="link inline" id="undo" disabled data-i18n="undo.btn">Annuler</button>
+        <button type="button" class="link inline" id="redo" disabled data-i18n="redo.btn">Rétablir</button>
+        <a href="#reglages" data-i18n="toolbar.settings">Réglages</a>
+      </div>
+    </div>
+
+    <div id="discarded" class="notice" hidden>
+      <p data-i18n="sync.discarded">L'autre version du budget a été écartée. Elle est gardée dans les versions de cet appareil (Réglages) et vous pouvez la télécharger.</p>
+      <p class="actions"><button type="button" id="discarded-dl" data-i18n="sync.discardedDl">Télécharger la version écartée</button> <button type="button" id="discarded-close" data-i18n="close">Fermer</button></p>
+    </div>
+    <div id="broken" class="notice" hidden>
+      <p data-i18n="broken.text">Ce budget n'a pas pu être affiché. Vos données ne sont pas perdues : dans les réglages, restaurez une version enregistrée ou exportez une sauvegarde.</p>
+      <p><button type="button" id="broken-settings" data-i18n="broken.btn">Ouvrir les réglages</button></p>
+    </div>
+
+    <h1 id="month-title">Budget</h1>
+    <p class="meta" id="country-label"></p>
+
+    <section id="month-empty" class="empty-month" aria-labelledby="empty-text" hidden>
+      <p id="empty-text"></p>
+      <p class="actions"><button type="button" class="primary" id="empty-copy"></button> <button type="button" id="empty-blank" data-i18n="empty.blank">Commencer un mois vide</button></p>
+      <p class="hint" id="empty-hint"></p>
+    </section>
+
+    <div id="month-body">
+      <section aria-labelledby="h-summary">
+        <h2 id="h-summary" class="visually-hidden" data-i18n="summary.h">Résumé du mois</h2>
+        <div class="headline" id="headline"></div>
+        <ul class="alerts" id="alerts" hidden></ul>
+        <dl class="summary" id="summary"></dl>
+        <p class="hint" data-i18n="summary.hint">Les virements entre vos propres comptes (catégorie « Virement interne ») ne sont comptés ni en revenus ni en dépenses.</p>
+      </section>
+
+      <section id="rates" class="rates" aria-labelledby="h-rates" hidden>
+        <h2 id="h-rates" data-i18n="rates.h">Taux de change</h2>
+        <div id="rates-list"></div>
+        <p class="hint" id="rates-info" aria-live="polite"></p>
+        <p class="actions"><button type="button" id="rates-refresh" data-i18n="rates.refresh">Mettre à jour les taux</button> <a href="Html/aide.html#taux" data-href-en="Html/en/help.html#rates" data-href-de="Html/de/hilfe.html#kurse" data-i18n="rates.why">Pourquoi ce taux ?</a></p>
+      </section>
+
+      <section aria-labelledby="h-chart">
+        <h2 id="h-chart" data-i18n="chart.h">Dépenses par catégorie</h2>
+        <p class="hint" data-i18n="chart.hint">Indiquez un budget prévu pour une catégorie : le site signale quand il est dépassé.</p>
+        <div id="chart"></div>
+      </section>
+
+      <section aria-labelledby="h-accounts">
+        <h2 id="h-accounts" data-i18n="accounts.h">Comptes</h2>
+        <p class="hint" data-i18n="accounts.hint">Cochez « Ponctuelle » pour une dépense ou un revenu de ce mois seulement : la ligne ne sera pas reprise le mois suivant.</p>
+        <div id="accounts" class="accounts"></div>
+        <button type="button" class="link add-account" data-newacc data-i18n="accounts.add">Ajouter un compte</button>
+      </section>
+
+      <section aria-labelledby="h-others">
+        <h2 id="h-others" data-i18n="others.h">Épargne, dettes et envies</h2>
+        <div id="others" class="others"></div>
+      </section>
+
+      <div class="sticky-sum" id="sticky-sum" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <section id="reglages" class="settings-page" aria-labelledby="set-title" hidden>
+    <p class="toolbar"><a href="#" id="back-budget" data-i18n="set.back">Retour au budget</a></p>
+    <h1 id="set-title" data-i18n="set.title">Réglages</h1>
+
+    <h2 data-i18n="set.display">Affichage</h2>
+    <div class="settings-grid">
+      <div class="field">
+        <label for="set-lang" data-i18n="set.lang">Langue</label>
+        <select id="set-lang">
+          <option value="fr">Français</option>
+          <option value="en">English</option>
+          <option value="de">Deutsch</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="set-theme" data-i18n="set.theme">Thème</label>
+        <select id="set-theme">
+          <option value="auto" data-i18n="theme.auto">Automatique (comme l'appareil)</option>
+          <option value="light" data-i18n="theme.light">Clair</option>
+          <option value="dark" data-i18n="theme.dark">Sombre</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="set-budget-only">
+      <h2 data-i18n="set.country.h">Pays, devise et calculs</h2>
+      <form id="settings-form" class="settings-grid">
+        <div class="field">
+          <label for="set-country" data-i18n="set.country">Pays</label>
+          <select id="set-country"></select>
+        </div>
+        <div class="field">
+          <label for="set-cur" data-i18n="set.cur">Devise principale</label>
+          <select id="set-cur"></select>
+        </div>
+        <div class="field">
+          <label for="set-threshold" data-i18n="set.threshold">Seuil d'alerte du solde du mois</label>
+          <div class="with-unit"><input id="set-threshold" type="text" inputmode="decimal" autocomplete="off" placeholder="-200" aria-describedby="set-threshold-hint"><span id="set-threshold-cur"></span></div>
+          <p class="hint" id="set-threshold-hint" data-i18n="set.thresholdHint">Facultatif. Sous ce montant, le solde est mis en évidence. Laissez vide pour ne pas l'utiliser.</p>
+        </div>
+        <label class="check wide"><input type="checkbox" id="set-advance"><span data-i18n="set.advance">En reprenant un mois, ajouter les versements au solde de l'épargne et retirer les mensualités du reste dû des dettes</span></label>
+        <div><button type="submit" data-i18n="set.save">Enregistrer</button></div>
+      </form>
+    </div>
+
+    <h2 data-i18n="set.account.h">Compte</h2>
+    <p id="account-status"></p>
+    <p><a href="Html/compte.html" id="account-link"></a></p>
+
+    <div id="set-history">
+      <h2 data-i18n="set.history.h">Historique</h2>
+      <h3 data-i18n="hist.months.h">Mois par mois</h3>
+      <p class="hint" data-i18n="hist.months.hint">Montants convertis avec les taux de change actuels.</p>
+      <div class="history-chart" id="history-chart"></div>
+      <div class="history-wrap" id="history-months"></div>
+      <h3 data-i18n="hist.log.h">Journal des modifications</h3>
+      <ol class="log-list" id="log-list"></ol>
+      <div class="actions">
+        <button type="button" id="log-more" hidden data-i18n="hist.more">Afficher plus</button>
+        <button type="button" id="log-clear" data-i18n="hist.clear">Vider le journal</button>
+      </div>
+    </div>
+
+    <h2 data-i18n="data.h">Vos données</h2>
+    <p data-i18n="data.p">Sans compte, tout est enregistré dans ce navigateur uniquement. Pour garder une copie ou changer d'appareil, exportez un fichier de sauvegarde.</p>
+
+    <h3 data-i18n="exp.h">Exporter</h3>
+    <div class="settings-grid">
+      <div class="field">
+        <label for="export-format" data-i18n="exp.format">Format</label>
+        <select id="export-format">
+          <option value="json" data-i18n="exp.json">JSON : sauvegarde complète</option>
+          <option value="xlsx" data-i18n="exp.xlsx">Excel (.xlsx) : toutes les lignes</option>
+          <option value="csv" data-i18n="exp.csv">CSV : toutes les lignes</option>
+          <option value="pdf" data-i18n="exp.pdf">PDF : rapport à imprimer</option>
+          <option value="docx" data-i18n="exp.docx">Word (.docx) : rapport modifiable</option>
+          <option value="md" data-i18n="exp.md">Markdown (.md) : rapport en texte</option>
+        </select>
+      </div>
+      <div class="field" id="export-scope-wrap" hidden>
+        <label for="export-scope" data-i18n="exp.scope">Période</label>
+        <select id="export-scope">
+          <option value="month" data-i18n="exp.month">Mois affiché</option>
+          <option value="all" data-i18n="exp.all">Tous les mois</option>
+        </select>
+      </div>
+    </div>
+    <p class="actions"><button type="button" id="export" data-i18n="data.export">Exporter</button></p>
+    <p class="hint" data-i18n="exp.hint">Tous les fichiers créés ici (JSON, Excel, CSV, PDF, Word et Markdown) peuvent être réimportés pour retrouver tout le budget.</p>
+
+    <h3 data-i18n="tpl.h">Modèles à remplir</h3>
+    <p data-i18n="tpl.p">Téléchargez un modèle, remplacez les exemples par vos chiffres, puis importez-le. Chaque ligne ira au bon endroit.</p>
+    <p class="actions">
+      <button type="button" data-template="xlsx" data-i18n="tpl.xlsx">Modèle Excel</button>
+      <button type="button" data-template="csv" data-i18n="tpl.csv">Modèle CSV</button>
+      <button type="button" data-template="docx" data-i18n="tpl.docx">Modèle Word</button>
+      <button type="button" data-template="md" data-i18n="tpl.md">Modèle Markdown</button>
+    </p>
+
+    <h3 data-i18n="imp.h">Importer</h3>
+    <p class="actions"><button type="button" id="import" data-i18n="data.import">Importer un fichier</button></p>
+    <p class="hint" data-i18n="imp.hint">JSON, Excel (.xlsx), CSV, Word (.docx), PDF, Markdown ou texte. Un fichier exporté par Budget mensuel remplace vos données. Un relevé bancaire ajoute des lignes à un compte, après un aperçu. Le fichier est lu sur votre appareil et n'est envoyé nulle part.</p>
+    <p class="hint" id="data-msg" aria-live="polite"></p>
+
+    <section id="structured" class="statement" aria-labelledby="sd-title" hidden>
+      <h3 id="sd-title">Import</h3>
+      <p id="sd-summary"></p>
+      <div id="sd-warnings-wrap" class="notice" hidden>
+        <p data-i18n="imp.warnTitle">Lignes ignorées ou corrigées :</p>
+        <ul id="sd-warnings"></ul>
+      </div>
+      <div id="sd-content"></div>
+      <div class="actions">
+        <button type="button" id="sd-merge" class="primary" data-i18n="imp.merge">Ajouter à mon budget</button>
+        <button type="button" id="sd-replace" class="danger">Remplacer tout le budget</button>
+        <button type="button" id="sd-cancel" data-i18n="st.cancel">Annuler</button>
+      </div>
+      <p class="hint" id="sd-hint" data-i18n="imp.mergeHint">« Ajouter » complète les mois du fichier sans créer de doublons. « Remplacer » efface le budget actuel et garde uniquement le contenu du fichier.</p>
+    </section>
+
+    <section id="statement" class="statement" aria-labelledby="st-title" hidden>
+      <h3 id="st-title">Relevé</h3>
+      <div id="st-map" class="settings-grid st-map" hidden>
+        <div class="field"><label for="st-map-date" data-i18n="st.date">Date</label><select id="st-map-date"></select></div>
+        <div class="field"><label for="st-map-label" data-i18n="col.labelH">Libellé</label><select id="st-map-label"></select></div>
+        <div class="field"><label for="st-map-amount" data-i18n="st.amountCol">Montant (signé)</label><select id="st-map-amount"></select></div>
+        <div class="field"><label for="st-map-debit" data-i18n="st.debit">Débit</label><select id="st-map-debit"></select></div>
+        <div class="field"><label for="st-map-credit" data-i18n="st.credit">Crédit</label><select id="st-map-credit"></select></div>
+        <label class="check"><input type="checkbox" id="st-header"><span data-i18n="st.header">La première ligne contient les titres</span></label>
+      </div>
+      <div class="field st-account">
+        <label for="st-account" data-i18n="st.account">Ajouter les lignes au compte</label>
+        <select id="st-account"></select>
+      </div>
+      <div id="st-salary" class="notice" hidden>
+        <p id="st-salary-text"></p>
+        <label class="check"><input type="checkbox" id="st-salary-replace"><span data-i18n="st.salaryReplace">Remplacer le détail du salaire (brut, cotisations, impôt) par les lignes de salaire du relevé</span></label>
+      </div>
+      <p class="hint" id="st-count"></p>
+      <div class="history-wrap" id="st-lines"></div>
+      <div class="actions">
+        <button type="button" class="primary" id="st-add" data-i18n="st.add">Ajouter les lignes cochées</button>
+        <button type="button" id="st-all" data-i18n="st.all">Tout cocher ou décocher</button>
+        <button type="button" id="st-cancel" data-i18n="st.cancel">Annuler</button>
+      </div>
+    </section>
+
+    <h3 data-i18n="ver.h">Versions enregistrées sur cet appareil</h3>
+    <p class="hint" data-i18n="ver.hint">Une copie est gardée chaque jour, avant chaque import et avant chaque effacement (10 au maximum). Elles restent dans ce navigateur et ne sont pas envoyées au compte.</p>
+    <div id="versions"></div>
+
+    <h3 data-i18n="del.h">Effacer</h3>
+    <div class="actions">
+      <button type="button" id="clear-month" data-i18n="data.clearMonth">Vider ce mois</button>
+      <button type="button" id="clear-all" class="danger" data-i18n="data.clearAll">Tout effacer</button>
+    </div>
+  </section>
+
+  <div class="toast" id="toast" role="status" hidden></div>
+  <p class="visually-hidden" id="live" aria-live="polite"></p>
+  <dialog id="dialog" class="dialog" aria-labelledby="dialog-title" aria-describedby="dialog-text">
+    <h2 id="dialog-title"></h2>
+    <p id="dialog-text"></p>
+    <div class="actions" id="dialog-actions"></div>
+  </dialog>
+  <input type="file" id="import-file" accept=".json,.xlsx,.csv,.txt,.pdf,.md,.docx,application/json,application/pdf,text/csv,text/markdown,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
+  <datalist id="banks-list"></datalist>
+  <datalist id="savings-list"></datalist>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav aria-label="Informations légales" data-i18n-attr="aria-label:f.legal">
+      <a href="Html/mentions-legales.html" data-href-en="Html/en/legal-notice.html" data-href-de="Html/de/impressum.html" data-i18n="f.mentions">Mentions légales</a>
+      <a href="Html/confidentialite.html" data-href-en="Html/en/privacy.html" data-href-de="Html/de/datenschutz.html" data-i18n="f.privacy">Confidentialité</a>
+      <a href="Html/cookies.html" data-href-en="Html/en/cookies.html" data-href-de="Html/de/cookies.html" data-i18n="f.cookies">Cookies</a>
+      <a href="Html/conditions.html" data-href-en="Html/en/terms.html" data-href-de="Html/de/nutzungsbedingungen.html" data-i18n="f.terms">Conditions d'utilisation</a>
+      <a href="Html/contact.html" data-i18n="f.contact">Contact</a>
+      <button type="button" class="link inline" data-cookies data-i18n="f.cookiesBtn">Gérer les cookies</button>
+      <button type="button" class="link inline" data-theme-cycle>Thème : auto</button>
+    </nav>
+    <p data-i18n="f.disclaimer">Budget mensuel, outil gratuit. Les calculs sont indicatifs et ne remplacent pas un conseil financier.</p>
+  </div>
+</footer>
+</body>
+</html>

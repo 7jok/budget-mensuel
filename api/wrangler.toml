@@ -1,0 +1,37 @@
+# API de Budget mensuel (Cloudflare Workers, offre gratuite).
+# Déploiement : voir api/README.md
+name = "budget-mensuel-api"
+main = "src/index.js"
+compatibility_date = "2026-06-01"
+workers_dev = false
+
+routes = [
+  { pattern = "api.budget-mensuel.ch", custom_domain = true }
+]
+
+# Journaux du Worker (requêtes et erreurs, sans le contenu des budgets), consultables dans Cloudflare.
+[observability]
+enabled = true
+
+# Nettoyage chaque nuit : sessions et liens expirés, compteurs, comptes inactifs depuis 24 mois.
+[triggers]
+crons = ["17 2 * * *"]
+
+[vars]
+ALLOWED_ORIGINS = "https://budget-mensuel.ch,https://www.budget-mensuel.ch"
+SITE_URL = "https://budget-mensuel.ch"
+MAIL_FROM = "formulaire@budget-mensuel.ch"
+RESET_FROM = "Budget mensuel <noreply@budget-mensuel.ch>"
+
+# Les valeurs privées ne sont pas écrites ici, car ce dépôt est public.
+# Elles sont enregistrées comme secrets (npx wrangler secret put NOM) :
+#   MAIL_TO               adresse qui reçoit les messages du formulaire (destination vérifiée dans Email Routing)
+#   GOOGLE_CLIENT_ID      identifiant OAuth Google
+#   GOOGLE_CLIENT_SECRET  secret OAuth Google
+#   RESEND_API_KEY        clé Resend pour les e-mails du compte (confirmation, mot de passe oublié, avertissement d'inactivité)
+
+[[send_email]]
+name = "MAILER"
+
+# La base de données des comptes est ajoutée ci-dessous par la commande :
+#   npx wrangler d1 create budget-mensuel-db --jurisdiction=eu --binding=DB --update-config
